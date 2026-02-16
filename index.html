@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Guest WiFi Access</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body {
+  margin:0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg,#224abe,#1cc88a);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+
+.card {
+  background:white;
+  padding:40px;
+  border-radius:15px;
+  width:90%;
+  max-width:400px;
+  text-align:center;
+  box-shadow:0 20px 50px rgba(0,0,0,0.3);
+}
+
+button {
+  margin-top:20px;
+  padding:12px;
+  width:100%;
+  border:none;
+  border-radius:30px;
+  background:#224abe;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+}
+</style>
+
+<script>
+function getQueryParam(param) {
+  var urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get(param);
+}
+
+function connect() {
+  var base_grant_url = getQueryParam("base_grant_url");
+  var user_continue_url = getQueryParam("user_continue_url");
+
+  var form = document.createElement("form");
+  form.method = "POST";
+  form.action = base_grant_url;
+
+  var continueField = document.createElement("input");
+  continueField.type = "hidden";
+  continueField.name = "continue_url";
+  continueField.value = user_continue_url;
+
+  form.appendChild(continueField);
+  document.body.appendChild(form);
+  form.submit();
+}
+</script>
+
+</head>
+
+<body>
+
+<div class="card">
+  <h2>Welcome to Guest WiFi</h2>
+  <p>Please accept the terms to continue.</p>
+
+  <label>
+    <input type="checkbox" id="agree">
+    I agree to the Terms & Conditions
+  </label>
+
+  <button onclick="if(document.getElementById('agree').checked){connect();}else{alert('Please agree to continue.');}">
+    Connect to WiFi
+  </button>
+</div>
+
+</body>
+</html>
